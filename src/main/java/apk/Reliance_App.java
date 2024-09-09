@@ -27,8 +27,9 @@ public class Reliance_App extends PRD_upload {
 	static int k;
 	static String Article_ID;
 	static String serial_no1;
+	static String Tag_name;
 
-	public static void main(String[] args) throws CsvException, MalformedURLException {
+	public static void main(String[] args) throws CsvException, MalformedURLException, InterruptedException {
 
 //	public static void Launch() throws MalformedURLException, InterruptedException, CsvException {
 		PRD_upload.web();
@@ -51,11 +52,12 @@ public class Reliance_App extends PRD_upload {
 		driver.findElement(By.xpath(Item_inward)).click();
 		ird = Over_Write_PRD.getIRD();
 		System.out.println(ird);
-		driver.findElement(By.id(Search_field)).sendKeys(ird);
-		driver.pressKey(new io.appium.java_client.android.nativekey.KeyEvent(AndroidKey.ENTER));
-		driver.executeScript("mobile: performEditorAction", ImmutableMap.of("action", "search"));
-		for (i = 0; i <= Article_IDS.size(); i++) {
-			try {
+		outerLoop:
+		for (i = 0; i <=Article_IDS.size(); i++) {
+			driver.findElement(By.id(Search_field)).sendKeys(ird);
+			driver.pressKey(new io.appium.java_client.android.nativekey.KeyEvent(AndroidKey.ENTER));
+			driver.executeScript("mobile: performEditorAction", ImmutableMap.of("action", "search"));
+//			try {
 //				driver.pressKey(new io.appium.java_client.android.nativekey.KeyEvent(AndroidKey.TAB));
 //				driver.pressKey(new io.appium.java_client.android.nativekey.KeyEvent(AndroidKey.TAB));
 				Article_ID = Article_IDS.get(i);
@@ -63,30 +65,34 @@ public class Reliance_App extends PRD_upload {
 				driver.pressKey(new io.appium.java_client.android.nativekey.KeyEvent(AndroidKey.ENTER));
 //				driver.executeScript("mobile: performEditorAction", ImmutableMap.of("action", "search"));
 //				Thread.sleep(5000);
-				for ( j =i ; i <=Serial1.size(); i++) {
+				for (j = i; i <= Serial1.size(); i++) {
 //					if (i<=1) {
-					serial_no1=Serial1.get(j);
+					serial_no1 = Serial1.get(j);
 					driver.findElement(By.xpath(Serail_field)).sendKeys(serial_no1);
 					driver.findElement(By.id(GradeItem)).click();
 					driver.findElement(By.xpath(CheckBox1)).click();
+					Thread.sleep(100);
 					driver.findElement(By.xpath(CheckBox2)).click();
 					driver.findElement(By.id(Next)).click();
-//					}
-					driver.findElement(By.id(Missing)).click();
-					driver.findElement(By.xpath(None1)).click();
-					driver.findElement(By.id(Ok)).click();
-					driver.findElement(By.id(Defective)).click();
-					driver.findElement(By.xpath(None2)).click();
-					driver.findElement(By.id(Ok));
-					driver.findElement(By.id(Complete)).click();
 					driver.findElement(By.id(Proceed)).click();
-
-					
-					
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
+					for (k = j; k < tagList.size(); k++) {
+					    Tag_name = tagList.get(k);
+					    driver.findElement(By.xpath(Tag_filed)).sendKeys(Tag_name);
+					    if (k == tagList.size() - 1) { 
+					        // If this is the last item, do not click AddItem, click CompleteIRD
+					        driver.findElement(By.id(CompleteIRD)).click();
+					        timeDevice1 = getCurrentTime();
+							System.out.println("App Completed time " + timeDevice1);
+					        break outerLoop;
+					    } else {
+					        // For all other items, click AddItem
+					        driver.findElement(By.id(AddItem)).click();
+					    }
+					    Thread.sleep(500);
+					    continue outerLoop;
+					}
+				}	
+				break;
 			}
 		}
 	}
-}

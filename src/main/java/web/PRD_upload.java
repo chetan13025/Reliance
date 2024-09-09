@@ -11,6 +11,7 @@ import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import com.opencsv.exceptions.CsvException;
@@ -38,6 +39,9 @@ public static void web() {
 				driver.findElement(By.xpath(usernamefiledW)).sendKeys(usernameW);
 				driver.findElement(By.xpath(passfieldW)).sendKeys(passwordW);
 				driver.findElement(By.xpath(signinw)).click();
+				Thread.sleep(500);
+				driver.findElement(By.xpath(Sidebar)).click();
+				Thread.sleep(100);
 				driver.findElement(By.xpath(PRD)).click();
 				driver.findElement(By.xpath(Create_PRD)).click();
 				driver.findElement(By.xpath(Upload)).click();
@@ -46,16 +50,16 @@ public static void web() {
 				Runtime.getRuntime().exec("C://autoitfiles/fileupload.exe" + " " + absolutePath);
 				Thread.sleep(2000);
 				driver.findElement(By.xpath(Confirm)).click();
-				Thread.sleep(400);
+				Thread.sleep(2000);
 				driver.navigate().refresh();
-				Thread.sleep(10000);
+				Thread.sleep(5000);
 				driver.navigate().refresh();
 				sta = driver.findElement(By.xpath(File_status));
 				status = sta.getText();
 				if (status.equals("Completed")) {
 					System.out.println(status);
 					success = true;
-					System.out.println(Tag_ids);
+//					System.out.println(Tag_ids);
 //				} else if (status.equals("Pending")) {
 //					Thread.sleep(3000);
 //					driver.navigate().refresh();

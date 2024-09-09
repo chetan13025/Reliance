@@ -9,13 +9,10 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVParser;
-import org.apache.commons.csv.CSVRecord;
-
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
 import com.opencsv.exceptions.CsvException;
+import com.opencsv.exceptions.CsvValidationException;
 
 public class Over_Write_PRD extends Properties {
 	static String filePath = ".\\csv_file\\RL_PRD.csv";
@@ -26,8 +23,9 @@ public class Over_Write_PRD extends Properties {
 	public static ArrayList<String> Article_IDS = new ArrayList<>();
 	public static ArrayList<String> Serial1 = new ArrayList<>();
 
+//	public static void main(String[] args) throws CsvException {
+
 	public static void write() throws CsvException {
-//    public static void main(String[] args) throws CsvException {
 		// Original functionality
 		overwriteColumns();
 		Properties.pro();
@@ -36,14 +34,30 @@ public class Over_Write_PRD extends Properties {
 		storeSelectedColumns(filePath, 11, 28);
 
 		// Print the collected data from the 11th and 28th columns
-		System.out.println("Data from the Article_ID");
+		System.out.println("Data from the Article_ID:");
 		for (String article_ID : Article_IDS) {
 			System.out.println(article_ID);
 		}
 
-		System.out.println("Data from the Serial_Number1");
+		System.out.println("Data from the Serial_Number1:");
 		for (String serial1 : Serial1) {
 			System.out.println(serial1);
+		}
+
+		// Count and print the number of rows in the CSV file, excluding the first row
+		try {
+			int rowCount = countRowsInCSV(filePath);
+			System.out.println("Number of rows (excluding header): " + rowCount);
+
+			// Generate tag IDs based on the row count
+			generateTagIds(tagList, rowCount, 6); // 6 characters per tag ID
+
+			System.out.println("Generated Tag IDs:");
+			for (String tagId : tagList) {
+				System.out.println(tagId);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -119,6 +133,47 @@ public class Over_Write_PRD extends Properties {
 		}
 	}
 
+	// Method to count the number of rows in the CSV file, excluding the first row
+	public static int countRowsInCSV(String filePath) throws IOException, CsvValidationException {
+		CSVReader reader = null;
+		int rowCount = 0;
+
+		try {
+			reader = new CSVReader(new FileReader(filePath));
+
+			// Skip the first row (header)
+			reader.readNext();
+
+			// Count the remaining rows
+			while (reader.readNext() != null) {
+				rowCount++;
+			}
+		} finally {
+			if (reader != null) {
+				reader.close();
+			}
+		}
+
+		return rowCount;
+	}
+
+	// Method to generate alphanumeric tag IDs and directly add them to the
+	// ArrayList
+	public static void generateTagIds(ArrayList<String> tagIds, int numberOfIds, int length) {
+		String alphanumeric = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + "abcdefghijklmnopqrstuvwxyz" + "0123456789";
+		Random random = new Random();
+
+		for (int i = 0; i < numberOfIds; i++) {
+			StringBuilder tagId = new StringBuilder();
+			for (int j = 0; j < length; j++) {
+				int index = random.nextInt(alphanumeric.length());
+				tagId.append(alphanumeric.charAt(index));
+			}
+			// Directly add the generated ID to the ArrayList
+			tagIds.add(tagId.toString());
+		}
+	}
+
 	// Helper functions to generate new values
 	private static String generateNewValue() {
 		Random random = new Random();
@@ -147,4 +202,5 @@ public class Over_Write_PRD extends Properties {
 	public static void setIRD(String iRD) {
 		IRD = iRD;
 	}
+
 }

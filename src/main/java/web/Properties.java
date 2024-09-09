@@ -38,6 +38,9 @@ public class Properties {
 	public static String Complete;
 	public static String Proceed;
 	public static String Tag_filed;
+	public static String Sidebar;
+	public static String AddItem;
+	public static String CompleteIRD;
 //	public static void main(String[] args) {
 
 	public static void pro() {
@@ -48,6 +51,7 @@ public class Properties {
 		usernameW = rb.getString("usernameweb");
 		passwordW = rb.getString("passwordweb");
 		signinw = rb.getString("signinweb");
+		Sidebar=rb.getString("sidebar");
 		PRD = rb.getString("prd");
 		Create_PRD = rb.getString("create_prd");
 		Upload = rb.getString("upload");
@@ -77,5 +81,7 @@ public class Properties {
 		Complete = rb.getString("complete");
 		Proceed = rb.getString("proceed");
 		Tag_filed = rb.getString("tag_filed");
+		AddItem=rb.getString("add_item");
+		CompleteIRD=rb.getString("completeird");
 	}
 }
