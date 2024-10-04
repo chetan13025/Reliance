@@ -26,7 +26,8 @@ public class PRD_upload extends Over_Write_PRD {
 	static String status;
 	static boolean success = false;
 	static ArrayList<String> Tag_ids = new ArrayList<>();
-public static void web() {
+
+	public static void web() {
 //	public static void main(String[] args) throws CsvException {
 		while (!success) {
 			try {
@@ -34,12 +35,12 @@ public static void web() {
 				WebDriverManager.firefoxdriver().setup();
 				driver = new FirefoxDriver();
 				driver.manage().window().maximize();
-				driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+				driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 				driver.get(URL);
 				driver.findElement(By.xpath(usernamefiledW)).sendKeys(usernameW);
 				driver.findElement(By.xpath(passfieldW)).sendKeys(passwordW);
 				driver.findElement(By.xpath(signinw)).click();
-				Thread.sleep(500);
+				Thread.sleep(2000);
 				driver.findElement(By.xpath(Sidebar)).click();
 				Thread.sleep(100);
 				driver.findElement(By.xpath(PRD)).click();
@@ -50,38 +51,35 @@ public static void web() {
 				Runtime.getRuntime().exec("C://autoitfiles/fileupload.exe" + " " + absolutePath);
 				Thread.sleep(2000);
 				driver.findElement(By.xpath(Confirm)).click();
-				Thread.sleep(2000);
+				Thread.sleep(10000);
 				driver.navigate().refresh();
-				Thread.sleep(5000);
+				Thread.sleep(240000);
 				driver.navigate().refresh();
+				Thread.sleep(1000);
 				sta = driver.findElement(By.xpath(File_status));
 				status = sta.getText();
 				if (status.equals("Completed")) {
 					System.out.println(status);
 					success = true;
 //					System.out.println(Tag_ids);
-//				} else if (status.equals("Pending")) {
-//					Thread.sleep(3000);
-//					driver.navigate().refresh();
-//				if (status.equals("Completed")) {
-//						System.out.println(status);
-//						success = true;
-//					}
+				} else if (status.equals("Import Started")) {
+					Thread.sleep(3000);
+					driver.navigate().refresh();
+				if (status.equals("Completed")) {
+						System.out.println(status);
+						success = true;
+					}
 				} else {
-					System.out.println("Halted");
+					System.out.println(status);
 //					tagList.clear();
 //					System.out.println(tagList);
-
 				}
 			} catch (Exception e) {
 				e.printStackTrace(); // Print the exception for debugging purposes
-				// You may choose to add a delay or other handling for exceptions if needed
 			} finally {
 				driver.quit();
 			}
-
 		}
-
 	}
 
 	public static String getCurrentTime() {
@@ -94,8 +92,5 @@ public static void web() {
 //    ArrayList<String> uniqueStrings = generateUniqueStrings(numberOfUniqueStrings);
 //    ArrayList<String> uniqueStrings = generateUniqueStrings(numberOfUniqueStrings);
 
-	
 //		System.out.println(Article_IDS);
 //		System.out.println(Serial1);
-
-

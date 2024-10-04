@@ -1,23 +1,25 @@
 package apk;
+
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
-import com.google.common.collect.ImmutableMap;
-import com.opencsv.exceptions.CsvException;
-
+import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.nativekey.AndroidKey;
 import io.appium.java_client.remote.MobileCapabilityType;
+import io.appium.java_client.touch.WaitOptions;
+import io.appium.java_client.touch.offset.PointOption;
 import web.Over_Write_PRD;
 import web.PRD_upload;
 import web.Properties;
 
-public class Reliance_App extends PRD_upload {
+public class Reliance_NOkia extends PRD_upload {
 	static AndroidDriver<WebElement> driver;
 	static String timeDevice1;
 	static String ird;
@@ -28,16 +30,14 @@ public class Reliance_App extends PRD_upload {
 	static String serial_no1;
 	static String Tag_name;
 
-	public static void main(String[] args) throws CsvException, MalformedURLException, InterruptedException {
-//		Loop:
-//	public static void Launch() throws MalformedURLException, InterruptedException, CsvException {
-		PRD_upload.web();
+	public static void main(String[] args) throws MalformedURLException, InterruptedException {
 //		Properties.pro();
+		PRD_upload.web();
 		DesiredCapabilities dc = new DesiredCapabilities();
 		dc.setCapability(MobileCapabilityType.AUTOMATION_NAME, "Appium");
 		dc.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android");
-		dc.setCapability(MobileCapabilityType.PLATFORM_VERSION, "13");
-		dc.setCapability(MobileCapabilityType.DEVICE_NAME, "chetan");
+		dc.setCapability(MobileCapabilityType.PLATFORM_VERSION, "11");
+		dc.setCapability(MobileCapabilityType.DEVICE_NAME, "Nokia C01 Plus");
 		dc.setCapability("appPackage", "com.blubirch.rims.relianceQAReseller");
 		dc.setCapability("appActivity", "com.blubirch.commons.presentation.login.LoginActivity");
 		URL url = new URL("http://127.0.0.1:4723/wd/hub");
@@ -68,7 +68,10 @@ public class Reliance_App extends PRD_upload {
 			for (j = i; j <= Serial1.size(); j++) {
 				serial_no1 = Serial1.get(j);
 				driver.findElement(By.xpath(Serail_field)).sendKeys(serial_no1);
-				driver.findElement(By.id(GradeItem)).click();
+				driver.findElementByAndroidUIAutomator("new UiScrollable(new UiSelector()"
+						+ ".scrollable(true).instance(0)).scrollIntoView(new UiSelector()"
+							+ ".textContains(\""+"GRADE THE ITEM"+"\").instance(0))").click();
+//				driver.findElement(By.id(GradeItem)).click();
 				driver.findElement(By.xpath(CheckBox1)).click();
 				Thread.sleep(100);
 				driver.findElement(By.xpath(CheckBox2)).click();

@@ -41,6 +41,7 @@ public class Properties {
 	public static String Sidebar;
 	public static String AddItem;
 	public static String CompleteIRD;
+	public static String Activity;
 //	public static void main(String[] args) {
 
 	public static void pro() {
@@ -83,5 +84,7 @@ public class Properties {
 		Tag_filed = rb.getString("tag_filed");
 		AddItem=rb.getString("add_item");
 		CompleteIRD=rb.getString("completeird");
+		Package=rb.getString("package");
+		Activity=rb.getString("activity");
 	}
 }

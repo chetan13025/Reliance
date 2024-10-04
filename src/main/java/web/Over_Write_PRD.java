@@ -119,7 +119,7 @@ public class Over_Write_PRD extends Properties {
 			List<String[]> allData = reader.readAll();
 
 			// Store data from the specified columns
-			for (int i = 1; i < allData.size(); i++) { // Start from 1 to skip header
+			for (int i = 1; i <allData.size(); i++) { // Start from 1 to skip header
 				String[] row = allData.get(i);
 				if (row.length > col1Index) {
 					Article_IDS.add(row[col1Index]);
@@ -177,19 +177,19 @@ public class Over_Write_PRD extends Properties {
 	// Helper functions to generate new values
 	private static String generateNewValue() {
 		Random random = new Random();
-		return "1000" + random.nextInt(10000);
+		return "100" + random.nextInt(100000);
 	}
 
 	private static String generateNewValue1() {
 		Random random1 = new Random();
-		return "1000" + random1.nextInt(10000);
+		return "100" + random1.nextInt(10000);
 	}
 
 	private static String generateUniqueRandomValue(Set<String> usedValues) {
 		Random random = new Random();
 		String uniqueValue;
 		do {
-			uniqueValue = "06ML4PA000" + random.nextInt(10000);
+			uniqueValue = "02DS4JY" + random.nextInt(100000000);
 		} while (!usedValues.add(uniqueValue));
 		return uniqueValue;
 	}
