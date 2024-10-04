@@ -1,4 +1,5 @@
 package apk;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
@@ -6,8 +7,7 @@ import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
-
-import com.google.common.collect.ImmutableMap;
+// import com.google.common.collect.ImmutableMap;
 import com.opencsv.exceptions.CsvException;
 
 import io.appium.java_client.android.AndroidDriver;
@@ -15,7 +15,7 @@ import io.appium.java_client.android.nativekey.AndroidKey;
 import io.appium.java_client.remote.MobileCapabilityType;
 import web.Over_Write_PRD;
 import web.PRD_upload;
-import web.Properties;
+// import web.Properties;
 
 public class Reliance_App extends PRD_upload {
 	static AndroidDriver<WebElement> driver;
@@ -29,10 +29,11 @@ public class Reliance_App extends PRD_upload {
 	static String Tag_name;
 
 	public static void main(String[] args) throws CsvException, MalformedURLException, InterruptedException {
-//		Loop:
-//	public static void Launch() throws MalformedURLException, InterruptedException, CsvException {
+		// Loop:
+		// public static void Launch() throws MalformedURLException,
+		// InterruptedException, CsvException {
 		PRD_upload.web();
-//		Properties.pro();
+		// Properties.pro();
 		DesiredCapabilities dc = new DesiredCapabilities();
 		dc.setCapability(MobileCapabilityType.AUTOMATION_NAME, "Appium");
 		dc.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android");
@@ -51,20 +52,23 @@ public class Reliance_App extends PRD_upload {
 		driver.findElement(By.xpath(Item_inward)).click();
 		ird = Over_Write_PRD.getIRD();
 		System.out.println(ird);
-		outerLoop: 
-			for (i = 0; i <= Article_IDS.size(); i++) {
+		outerLoop: for (i = 0; i <= Article_IDS.size(); i++) {
 			driver.findElement(By.id(Search_field)).sendKeys(ird);
 			driver.pressKey(new io.appium.java_client.android.nativekey.KeyEvent(AndroidKey.ENTER));
 			Thread.sleep(100);
-//			driver.executeScript("mobile: performEditorAction", ImmutableMap.of("action", "search"));
-//			try {
-//				driver.pressKey(new io.appium.java_client.android.nativekey.KeyEvent(AndroidKey.TAB));
-//				driver.pressKey(new io.appium.java_client.android.nativekey.KeyEvent(AndroidKey.TAB));
+			// driver.executeScript("mobile: performEditorAction", ImmutableMap.of("action",
+			// "search"));
+			// try {
+			// driver.pressKey(new
+			// io.appium.java_client.android.nativekey.KeyEvent(AndroidKey.TAB));
+			// driver.pressKey(new
+			// io.appium.java_client.android.nativekey.KeyEvent(AndroidKey.TAB));
 			Article_ID = Article_IDS.get(i);
 			driver.findElement(By.xpath(Article_id_field)).sendKeys(Article_ID);
 			driver.pressKey(new io.appium.java_client.android.nativekey.KeyEvent(AndroidKey.ENTER));
-//				driver.executeScript("mobile: performEditorAction", ImmutableMap.of("action", "search"));
-//				Thread.sleep(5000);
+			// driver.executeScript("mobile: performEditorAction", ImmutableMap.of("action",
+			// "search"));
+			// Thread.sleep(5000);
 			for (j = i; j <= Serial1.size(); j++) {
 				serial_no1 = Serial1.get(j);
 				driver.findElement(By.xpath(Serail_field)).sendKeys(serial_no1);
@@ -91,8 +95,8 @@ public class Reliance_App extends PRD_upload {
 					continue outerLoop;
 				}
 			}
-//			break;
+			// break;
 		}
-//		continue Loop;
+		// continue Loop;
 	}
 }
